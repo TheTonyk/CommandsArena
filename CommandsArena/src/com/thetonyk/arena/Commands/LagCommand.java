@@ -27,7 +27,7 @@ public class LagCommand implements CommandExecutor, TabCompleter {
 		}
 		
 		double rawTps = MinecraftServer.getServer().recentTps[0];
-		DecimalFormat format = new DecimalFormat("00.00");
+		DecimalFormat format = new DecimalFormat("##.##");
 		String tps = format.format(rawTps);
 		
 		long ramUsage = (Runtime.getRuntime().totalMemory() / 1024 / 1024) - (Runtime.getRuntime().freeMemory() / 1024 / 1024);
