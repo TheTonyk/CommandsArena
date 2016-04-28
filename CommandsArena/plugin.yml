@@ -1,0 +1,57 @@
+name: CommandsArena
+version: 0.1
+author: TheTonyk
+description: CommandsArena Plugin by TheTonyk for CommandsPVP Minecraft Server.
+prefix: Arena
+softdepend: [ProtocolLib, Pregennerator]
+main: com.thetonyk.arena.Main
+
+commands:
+    world:
+        description: Manage worlds
+        usage: /world
+    whitelist:
+        description: Manage the whitelist
+        usage: /whitelist
+        aliases: [wl, wh]
+    rank:
+        description: Change ranks of players.
+        usage: /rank
+    pregen:
+        description: Pregenerate worlds
+        usage: /pregen
+    border:
+        description: Change size of world
+        usage: /border
+    butcher:
+        description: Kill all mobs
+        usage: /butcher
+    clear:
+        description: Clear inventories of players.
+        usage: /clear
+    gamemode:
+        description: Change gamemode of players.
+        usage: /gamemode
+        aliases: [gm]
+    arena:
+        description: Setup arenas
+        usage: /arena
+        aliases: [a]
+    lag:
+        description: About the server
+        usage: /lag
+        aliases: [tps]
+    fly:
+        description: Enable fly
+        usage: /fly
+    leave:
+        description: Back to arena hub
+        usage: /leave
+        aliases: [exit, suicide, spawn]
+    hotbar:
+        description: Change hotbar disposition
+        usage: /hotbar
+    check:
+        description: Check CPS of a player
+        usage: /check
+        aliases: [cps]
