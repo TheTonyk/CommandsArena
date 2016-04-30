@@ -19,6 +19,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
+import com.thetonyk.arena.Main;
 import com.thetonyk.arena.Inventories.FeaturesInventory;
 import com.thetonyk.arena.Utils.ArenaUtils;
 import com.thetonyk.arena.Utils.DatabaseUtils;
@@ -52,6 +53,7 @@ public class InventoryListener implements Listener {
 				
 				ArenaUtils.setUhc(arena, state);
 				event.getWhoClicked().openInventory(FeaturesInventory.getFeatures(arena));
+				Bukkit.broadcastMessage(Main.PREFIX + "The '§6UHC§7' features is now " + (state ? "enabled" : "disabled") + " in the arena '§6" + ArenaUtils.getName(arena) + "§7'.");
 				
 			}
 			
@@ -65,6 +67,7 @@ public class InventoryListener implements Listener {
 				
 				ArenaUtils.setMeleefun(arena, state);
 				event.getWhoClicked().openInventory(FeaturesInventory.getFeatures(arena));
+				Bukkit.broadcastMessage(Main.PREFIX + "The '§6Meleefun§7' features is now " + (state ? "enabled" : "disabled") + " in the arena '§6" + ArenaUtils.getName(arena) + "§7'.");
 				
 			}
 			
