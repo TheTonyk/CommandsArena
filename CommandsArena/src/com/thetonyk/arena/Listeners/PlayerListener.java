@@ -516,6 +516,33 @@ public class PlayerListener implements Listener {
 			
 		}
 		
+		if (event.getEntity() instanceof Player && event.getDamager() instanceof Player && event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+			
+			for (String id : ArenaUtils.getArenas()) {
+				
+				if (ArenaUtils.getWorld(id).equalsIgnoreCase(event.getEntity().getWorld().getName())) {
+					
+					if (Arena.meleefun.get(id)) break;
+					else return;
+					
+				}
+				
+			}
+			
+			event.setDamage(event.getDamage() * 0.5);
+			
+			new BukkitRunnable() {
+				
+				public void run() {
+					
+					((Player) event.getEntity()).setNoDamageTicks(0);
+					
+				}
+				
+			}.runTaskLater(Main.arena, 1);
+			
+		}
+		
 	}
 	
 	@EventHandler

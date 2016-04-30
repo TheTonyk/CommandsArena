@@ -61,6 +61,12 @@ public class Main extends JavaPlugin {
 		DisplayUtils.redditHearts();
 		Bukkit.clearRecipes();
 		
+		for (String id : ArenaUtils.getArenas()) {
+			
+			Arena.meleefun.put(id,(ArenaUtils.getMeleefun(id)));
+			
+		}
+		
 		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "CommandsBungee");
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {

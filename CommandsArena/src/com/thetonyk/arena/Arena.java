@@ -15,5 +15,6 @@ public class Arena {
 	public static List<Location> water = new ArrayList<Location>();
 	public static Map<Player, Integer[]> scores = new HashMap<Player, Integer[]>();
 	public static List<Player> nodamages = new ArrayList<Player>();
+	public static Map<String, Boolean> meleefun = new HashMap<String, Boolean>();
 
 }

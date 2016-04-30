@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,6 +34,8 @@ public class ArenaUtils {
 			return;
 			
 		}
+		
+		Arena.meleefun.put(id, false);
 		
 		for (Player player : Bukkit.getWorld("lobby").getPlayers()) {
 			
@@ -262,6 +265,7 @@ public class ArenaUtils {
 		
 		}
 		
+		if (Arena.meleefun.containsKey(id)) Arena.meleefun.remove(id);
 		PlayerUtils.removeHotbar(id);
 		
 	}
@@ -615,11 +619,18 @@ public class ArenaUtils {
 			
 		}
 		
+		Arena.meleefun.put(id, state);
+		
 	}
 	
 	public static void updateCompass(Player player) {
 		
-		if (player.getWorld().getPlayers().size() <= 1) return;
+		if (player.getWorld().getPlayers().size() <= 1) {
+			
+			player.setCompassTarget(new Location(player.getWorld(), 0, PlayerUtils.getHighestY(0, 0, player.getWorld()), 0));
+			return;
+			
+		}
 				
 		double nearestSize = (double) WorldUtils.getSize(player.getWorld().getName());
 		Player nearestPlayer = null;
