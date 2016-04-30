@@ -339,6 +339,7 @@ public class ArenaUtils {
 		}
 		
 		Arena.nodamages.add(player);
+		DisplayUtils.sendTitle(player, "", "§7Teaming §cnot allowed", 0, 35, 5);
 		
 		new BukkitRunnable() {
 			

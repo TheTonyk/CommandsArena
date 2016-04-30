@@ -33,11 +33,13 @@ public class DisplayUtils {
 		IChatBaseComponent jsonTitle = ChatSerializer.a("{\"text\":\"" + title + "\"}");
 		IChatBaseComponent jsonSubtitle = ChatSerializer.a("{\"text\":\"" + subtitle + "\"}");
 
-		PacketPlayOutTitle sendTitle = new PacketPlayOutTitle(EnumTitleAction.TITLE, jsonTitle, fadeIn, stay, fadeOut);
+		PacketPlayOutTitle sendTime = new PacketPlayOutTitle(EnumTitleAction.TIMES, (IChatBaseComponent) null, fadeIn, stay, fadeOut);
+		PacketPlayOutTitle sendTitle = new PacketPlayOutTitle(EnumTitleAction.TITLE, jsonTitle);
 		PacketPlayOutTitle sendSubtitle = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, jsonSubtitle);
 
-		((CraftPlayer)player).getHandle().playerConnection.sendPacket(sendSubtitle);
+		((CraftPlayer)player).getHandle().playerConnection.sendPacket(sendTime);
 		((CraftPlayer)player).getHandle().playerConnection.sendPacket(sendTitle);
+		((CraftPlayer)player).getHandle().playerConnection.sendPacket(sendSubtitle);
 		
 	}
 	

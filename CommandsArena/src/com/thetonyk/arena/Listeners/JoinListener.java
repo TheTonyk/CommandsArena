@@ -97,7 +97,7 @@ public class JoinListener implements Listener {
 			
 			public void run() {
 				
-				DisplayUtils.sendTitle(player, "§aCommandsPVP", "§7Welcome on the §aUHC Arena §7⋯ §a" + MessengerListener.playerCount.get("arena1.8") + " §7players onlines", 1, 20, 10);
+				DisplayUtils.sendTitle(player, "§aCommandsPVP", "§7Welcome on the §aUHC Arena §7⋯ §a" + MessengerListener.playerCount.get("arena1.8") + " §7players onlines", 0, 40, 10);
 				
 			}
 			
