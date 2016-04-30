@@ -250,6 +250,49 @@ public class ArenaCommand implements CommandExecutor, TabCompleter {
 			
 		}
 		
+		if (args[0].equalsIgnoreCase("world")) {
+			
+			if (args.length < 3) {
+				
+				sender.sendMessage(Main.PREFIX + "Usage: /arena world <arena> <world>");
+				return true;
+				
+			}
+			
+			if (!ArenaUtils.getArenas().contains(args[1])) {
+				
+				sender.sendMessage(Main.PREFIX + "The arena '§6" + args[1] + "§7' doesn't exist.");
+				return true;
+				
+			}
+			
+			if (!WorldUtils.exist(args[2])) {
+				
+				sender.sendMessage(Main.PREFIX + "The world '§6" + args[2] + "§7' doesn't exist.");
+				return true;
+				
+			}
+			
+			for (String id : ArenaUtils.getArenas()) {
+				
+				if (ArenaUtils.getWorld(id).equalsIgnoreCase(args[2])) {
+					
+					sender.sendMessage(Main.PREFIX + "The world '§6" + args[2] + "§7' is already used?");
+					return true;
+					
+				}
+				
+			}
+			
+			ArenaUtils.disable(args[1]);
+			ArenaUtils.setWorld(args[1], args[2]);
+			ArenaUtils.enable(args[1]);
+			
+			sender.sendMessage(Main.PREFIX + "The world of the arena '§6" + args[1] + "§7' has been changed.");
+			return true;
+				
+		}
+		
 		sender.sendMessage(Main.PREFIX + "Usage of /arena:");
 		sender.sendMessage("§8⫸ §6/arena create §8- §7Create an arena.");
 		sender.sendMessage("§8⫸ §6/arena delete §8- §7Delete an arena.");
@@ -259,6 +302,7 @@ public class ArenaCommand implements CommandExecutor, TabCompleter {
 		sender.sendMessage("§8⫸ §6/arena features §8- §7Toggle features of arenas.");
 		sender.sendMessage("§8⫸ §6/arena enable §8- §7Enable a arena.");
 		sender.sendMessage("§8⫸ §6/arena disable §8- §7Disable a arena.");
+		sender.sendMessage("§8⫸ §6/arena world §8- §7Change world of a arena.");
 		return true;
 		
 	}
@@ -279,10 +323,11 @@ public class ArenaCommand implements CommandExecutor, TabCompleter {
 			complete.add("features");
 			complete.add("enable");
 			complete.add("disable");
+			complete.add("world");
 			
 		} else if (args.length == 2) {
 			
-			if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("features") || args[0].equalsIgnoreCase("enable") || args[0].equalsIgnoreCase("disable")) {
+			if (args[0].equalsIgnoreCase("delete") || args[0].equalsIgnoreCase("features") || args[0].equalsIgnoreCase("enable") || args[0].equalsIgnoreCase("disable") || args[0].equalsIgnoreCase("world")) {
 				
 				complete = new ArrayList<String>(ArenaUtils.getArenas());
 				
@@ -290,7 +335,7 @@ public class ArenaCommand implements CommandExecutor, TabCompleter {
 			
 		} else if (args.length == 3) {
 			
-			if (args[0].equalsIgnoreCase("create")) {
+			if (args[0].equalsIgnoreCase("create") || args[0].equalsIgnoreCase("world")) {
 				
 				for (World world : Bukkit.getWorlds()) {
 					
