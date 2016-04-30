@@ -453,7 +453,8 @@ public class PlayerListener implements Listener {
 				Bukkit.broadcastMessage(Main.PREFIX + "The player '§6" + ((Player) ((Arrow) event.getDamager()).getShooter()).getName() + "§7' got a longshot of §a" + format.format(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation())) + "m§7.");
 				
 				Integer[] scores = Arena.scores.get((Player) ((Arrow) event.getDamager()).getShooter());
-				if (Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation())) > Arena.scores.get(event.getEntity())[3]) scores[3] = (int) Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation()));
+				if (((int) Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation()))) > Arena.scores.get(((Player) ((Arrow) event.getDamager()).getShooter()))[3]) scores[3] = (int) Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation()));
+				Bukkit.broadcastMessage(((int) Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation()))) + " > "  + Arena.scores.get(((Player) ((Arrow) event.getDamager()).getShooter()))[3]);
 				Arena.scores.put((Player) ((Arrow) event.getDamager()).getShooter(), scores);
 				
 				PlayerUtils.updateScoreboard(((Player) ((Arrow) event.getDamager()).getShooter()));
