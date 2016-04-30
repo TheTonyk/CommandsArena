@@ -454,7 +454,6 @@ public class PlayerListener implements Listener {
 				
 				Integer[] scores = Arena.scores.get((Player) ((Arrow) event.getDamager()).getShooter());
 				if (((int) Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation()))) > Arena.scores.get(((Player) ((Arrow) event.getDamager()).getShooter()))[3]) scores[3] = (int) Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation()));
-				Bukkit.broadcastMessage(((int) Math.floor(((Player) ((Arrow) event.getDamager()).getShooter()).getLocation().distance(event.getEntity().getLocation()))) + " > "  + Arena.scores.get(((Player) ((Arrow) event.getDamager()).getShooter()))[3]);
 				Arena.scores.put((Player) ((Arrow) event.getDamager()).getShooter(), scores);
 				
 				PlayerUtils.updateScoreboard(((Player) ((Arrow) event.getDamager()).getShooter()));
