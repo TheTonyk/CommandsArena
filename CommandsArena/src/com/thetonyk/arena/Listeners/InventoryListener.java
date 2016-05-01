@@ -11,11 +11,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
@@ -82,7 +84,7 @@ public class InventoryListener implements Listener {
 				
 				if (!ArenaUtils.getName(id).equals(event.getCurrentItem().getItemMeta().getDisplayName())) continue;
 		
-				Bukkit.getPlayer(event.getWhoClicked().getUniqueId()).setGameMode(GameMode.SURVIVAL);
+				Bukkit.getPlayer(event.getWhoClicked().getUniqueId()).setGameMode(GameMode.ADVENTURE);
 				PlayerUtils.clearInventory(Bukkit.getPlayer(event.getWhoClicked().getUniqueId()));
 				Bukkit.getPlayer(event.getWhoClicked().getUniqueId()).closeInventory();
 				DisplayUtils.sendTitle(Bukkit.getPlayer(event.getWhoClicked().getUniqueId()), "", "§6Open your inventory to set the kit", 2, 30, 2);
@@ -269,6 +271,17 @@ public class InventoryListener implements Listener {
 			ArenaUtils.placeItems(Bukkit.getPlayer(event.getPlayer().getUniqueId()));
 			
 		}
+		
+	}
+	
+	@EventHandler
+	public void onOpen(InventoryOpenEvent event) {
+		
+		if (!(event.getPlayer() instanceof Player)) return;
+		
+		if (!editHotbar.containsKey(event.getPlayer().getUniqueId())) return;
+		
+		((Player) event.getPlayer()).updateInventory();
 		
 	}
 

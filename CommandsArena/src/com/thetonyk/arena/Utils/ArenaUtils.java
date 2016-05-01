@@ -409,13 +409,19 @@ public class ArenaUtils {
 	
 	public static void updateNames (Player player) {
 		
+		if (!player.getWorld().getName().equalsIgnoreCase("lobby")) return;
+		
 		for (String id : ArenaUtils.getArenas()) {
 			
 			if (player.getInventory().getItem(ArenaUtils.getSlot(id)) == null) continue;
+			
+			if (player.getInventory().getItem(ArenaUtils.getSlot(id)).hasItemMeta() && player.getInventory().getItem(ArenaUtils.getSlot(id)).getItemMeta().hasDisplayName() && player.getInventory().getItem(ArenaUtils.getSlot(id)).getItemMeta().getDisplayName().startsWith(ArenaUtils.getName(id))) {
 				
-			ItemMeta meta = player.getInventory().getItem(ArenaUtils.getSlot(id)).getItemMeta();
-			meta.setDisplayName(ArenaUtils.getName(id) + " §8(§a" + Bukkit.getWorld(ArenaUtils.getWorld(id)).getPlayers().size() + " §7players§8)");
-			player.getInventory().getItem(ArenaUtils.getSlot(id)).setItemMeta(meta);
+				ItemMeta meta = player.getInventory().getItem(ArenaUtils.getSlot(id)).getItemMeta();
+				meta.setDisplayName(ArenaUtils.getName(id) + " §8(§a" + Bukkit.getWorld(ArenaUtils.getWorld(id)).getPlayers().size() + " §7players§8)");
+				player.getInventory().getItem(ArenaUtils.getSlot(id)).setItemMeta(meta);
+			
+			}
 			
 		}
 		

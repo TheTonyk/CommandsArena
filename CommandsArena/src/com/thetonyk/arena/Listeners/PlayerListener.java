@@ -33,6 +33,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -91,7 +92,12 @@ public class PlayerListener implements Listener {
 			Block block = event.getBlock();
 			World world = block.getWorld();
 		
-			if (world.getName().equals("lobby") && event.getPlayer().hasPermission("global.build") && event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+			if (world.getName().equalsIgnoreCase("lobby") && (!event.getPlayer().hasPermission("global.build") || event.getPlayer().getGameMode() != GameMode.CREATIVE)) {
+				
+				event.setCancelled(true);
+				return;
+				
+			}
 			
 			if (event.getBlock().getType() == Material.LONG_GRASS || event.getBlock().getType() == Material.DOUBLE_PLANT) {
 				
@@ -136,11 +142,18 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onBucketFill(PlayerBucketFillEvent event) {
 		
-		if (event.getBlockClicked().getWorld().getName().equals("lobby") && event.getPlayer().hasPermission("global.build") && event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+		if (event.getBlockClicked().getWorld().getName().equalsIgnoreCase("lobby") && (!event.getPlayer().hasPermission("global.build") || event.getPlayer().getGameMode() != GameMode.CREATIVE)) {
+			
+			event.setCancelled(true);
+			event.getBlockClicked().getState().update(true, true);
+			return;
+			
+		}
 		
 		if (event.getBlockClicked().getWorld().getName().equals("lobby") && !event.getPlayer().hasPermission("global.build")) {
 			
 			event.setCancelled(true);
+			event.getBlockClicked().getState().update(true, true);
 			return;
 			
 		}
@@ -150,6 +163,7 @@ public class PlayerListener implements Listener {
 		if (event.getItemStack().getType() == Material.LAVA_BUCKET) {
 			
 			event.setCancelled(true);
+			event.getBlockClicked().getState().update(true, true);
 			return;
 			
 		}
@@ -157,6 +171,7 @@ public class PlayerListener implements Listener {
 		if (!Arena.blocks.contains(location)) {
 			
 			event.setCancelled(true);
+			event.getBlockClicked().getState().update(true, true);
 			return;
 			
 		}
@@ -177,7 +192,12 @@ public class PlayerListener implements Listener {
 		Block block = event.getBlock();
 		World world = block.getWorld();
 	
-		if (world.getName().equals("lobby") && event.getPlayer().hasPermission("global.build") && event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+		if (world.getName().equalsIgnoreCase("lobby") && (!event.getPlayer().hasPermission("global.build") || event.getPlayer().getGameMode() != GameMode.CREATIVE)) {
+			
+			event.setCancelled(true);
+			return;
+			
+		}
 		
 		if (event.getBlockReplacedState().getType() == Material.LAVA || event.getBlockReplacedState().getType() == Material.STATIONARY_LAVA) {
 			
@@ -248,11 +268,18 @@ public class PlayerListener implements Listener {
 	@EventHandler
 	public void onBucketEmpty(PlayerBucketEmptyEvent event) {
 		
-		if (event.getBlockClicked().getWorld().getName().equals("lobby") && event.getPlayer().hasPermission("global.build") && event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+		if (event.getBlockClicked().getWorld().getName().equalsIgnoreCase("lobby") && (!event.getPlayer().hasPermission("global.build") || event.getPlayer().getGameMode() != GameMode.CREATIVE)) {
+			
+			event.setCancelled(true);
+			event.getBlockClicked().getState().update(true, true);
+			return;
+			
+		}
 		
 		if (event.getBlockClicked().getWorld().getName().equals("lobby") && !event.getPlayer().hasPermission("global.build")) {
 			
 			event.setCancelled(true);
+			event.getBlockClicked().getState().update(true, true);
 			return;
 			
 		}
@@ -260,6 +287,7 @@ public class PlayerListener implements Listener {
 		if (event.getBlockClicked().getWorld().getBlockAt(new Location(event.getBlockClicked().getWorld(), event.getBlockClicked().getX() + event.getBlockFace().getModX(), event.getBlockClicked().getY() + event.getBlockFace().getModY(), event.getBlockClicked().getZ() + event.getBlockFace().getModZ())).getType() == Material.STATIONARY_LAVA || event.getBlockClicked().getWorld().getBlockAt(new Location(event.getBlockClicked().getWorld(), event.getBlockClicked().getX() + event.getBlockFace().getModX(), event.getBlockClicked().getY() + event.getBlockFace().getModY(), event.getBlockClicked().getZ() + event.getBlockFace().getModZ())).getType() == Material.LAVA || event.getBlockClicked().getWorld().getBlockAt(new Location(event.getBlockClicked().getWorld(), event.getBlockClicked().getX() + event.getBlockFace().getModX(), event.getBlockClicked().getY() + event.getBlockFace().getModY(), event.getBlockClicked().getZ() + event.getBlockFace().getModZ())).getType() == Material.WATER || event.getBlockClicked().getWorld().getBlockAt(new Location(event.getBlockClicked().getWorld(), event.getBlockClicked().getX() + event.getBlockFace().getModX(), event.getBlockClicked().getY() + event.getBlockFace().getModY(), event.getBlockClicked().getZ() + event.getBlockFace().getModZ())).getType() == Material.STATIONARY_WATER) {
 			
 			event.setCancelled(true);
+			event.getBlockClicked().getState().update(true, true);
 			return;
 			
 		}
@@ -702,6 +730,17 @@ public class PlayerListener implements Listener {
 		if (!(event.getEntity() instanceof Arrow)) return;
 		
 		((Arrow) event.getEntity()).remove();
+		
+	}
+	
+	@EventHandler
+	public void onArrowShoot(EntityShootBowEvent event) {
+		
+		if (!(event.getEntity() instanceof Player)) return;
+		
+		if (!InventoryListener.editHotbar.containsKey(event.getEntity().getUniqueId()) && !InventoryListener.editKits.containsKey(event.getEntity().getUniqueId())) return;
+		
+		event.setCancelled(true);
 		
 	}
 
