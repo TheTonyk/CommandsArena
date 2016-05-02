@@ -33,9 +33,14 @@ public class ChatListener implements Listener {
 		
 		for (int i = 0; i < receivers.length; i++) {
 			
-			if (PlayerUtils.getChatVisibility(receivers[i]) == 0) event.getRecipients().remove(receivers[i]);
+			if (PlayerUtils.getChatVisibility(receivers[i]) == 0) {
+				
+				event.getRecipients().remove(receivers[i]);
+				continue;
+				
+			}
 			
-			if (PlayerUtils.getChatVisibility(receivers[i]) == 1 && event.getMessage().contains(receivers[i].getName()) && PlayerUtils.getMentionsState(receivers[i]) == 1) {
+			if (event.getMessage().contains(receivers[i].getName()) && PlayerUtils.getMentionsState(receivers[i]) == 1) {
 				
 				if (event.getRecipients().contains(receivers[i])) event.getRecipients().remove(receivers[i]);
 				
@@ -43,6 +48,14 @@ public class ChatListener implements Listener {
 				
 				receivers[i].sendMessage(PlayerUtils.getRank(player.getName()).getPrefix() + "§7" + player.getName() + " §8⫸ §f" + message);
 				receivers[i].playSound(receivers[i].getLocation(), Sound.ORB_PICKUP, 1, 1);
+				continue;
+				
+			}
+			
+			if (PlayerUtils.getIgnoredPlayers(receivers[i].getUniqueId()).contains(player.getUniqueId())) {
+				
+				event.getRecipients().remove(receivers[i]);
+				continue;
 				
 			}
 			
